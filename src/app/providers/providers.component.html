@@ -1,0 +1,75 @@
+<mat-card class="Search">
+  <mat-card-content>
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput [formControl]="searchName" />
+    </mat-form-field>
+    &nbsp;
+  </mat-card-content>
+</mat-card>
+<mat-card class="Providers">
+  <mat-card-content>
+    <mat-table #table [dataSource]="dataSource">
+      <ng-container matColumnDef="familyNameCol">
+        <mat-header-cell *matHeaderCellDef>Family</mat-header-cell>
+        <mat-cell *matCellDef="let entry">{{
+          getPractionerFamilyName(entry)
+        }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="givenNamesCol">
+        <mat-header-cell *matHeaderCellDef>Given</mat-header-cell>
+        <mat-cell *matCellDef="let entry">{{
+          getPractionerGivenNames(entry)
+        }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="birthDateCol">
+        <mat-header-cell *matHeaderCellDef>Birthdate</mat-header-cell>
+        <mat-cell *matCellDef="let entry">{{
+          getPractionerBirthDate(entry)
+        }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="addressLinesCol">
+        <mat-header-cell *matHeaderCellDef>Street</mat-header-cell>
+        <mat-cell *matCellDef="let entry">{{
+          getPractionerAddressLines(entry)
+        }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="addressCityCol">
+        <mat-header-cell *matHeaderCellDef>City</mat-header-cell>
+        <mat-cell *matCellDef="let entry">{{
+          getPractionerAddressCity(entry)
+        }}</mat-cell>
+      </ng-container>
+      <mat-header-row
+        *matHeaderRowDef="[
+          'familyNameCol',
+          'givenNamesCol',
+          'birthDateCol',
+          'addressLinesCol',
+          'addressCityCol'
+        ]"
+      ></mat-header-row>
+      <mat-row
+        *matRowDef="
+          let row;
+          columns: [
+            'familyNameCol',
+            'givenNamesCol',
+            'birthDateCol',
+            'addressLinesCol',
+            'addressCityCol'
+          ]
+        "
+        (click)="selectRow(row)"
+      ></mat-row>
+    </mat-table>
+    <mat-paginator
+      [pageIndex]="pageIndex"
+      [length]="length"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="goToPage($event)"
+    ></mat-paginator>
+  </mat-card-content>
+</mat-card>
+<app-provider-detail [provider]="selectedProvider"></app-provider-detail>
